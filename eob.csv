@@ -1,1 +1,1 @@
-Date,Provider,ServiceName,Billed,Discount,Charged,Copay,Total
+Service Date,Patient Name,Provider Name,Claim Date,Document ID,Service Name,Billed,Discount,charged,copay,Total,category

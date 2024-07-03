@@ -20,7 +20,7 @@ def import_eob(input_path):
     return eob_df
 
 
-def add_rows(eob_df, receipt_data):
+def add_rows(eob_df, eob_data):
     """
     Add rows to the eob DataFrame from the receipt_data in the function call.
 
@@ -36,19 +36,24 @@ def add_rows(eob_df, receipt_data):
 
     # Process each item and append to the DataFrame
     new_rows = []
-    for item in receipt_data['items']:
+    for item in eob_data['items']:
 
         print(f"Adding item: {item['name']}")
         new_row = {
-            "Date": receipt_data.get("date", date.today().isoformat()),
-            "Vendor": receipt_data.get("vendor", ""),
-            "Name": item.get("name", ""),
-            "Quantity": item.get("quantity", 1),
-            "Price": item.get("price", 0),
-            "Category": item.get("category", "Uncategorized"),
-            "Payment method": receipt_data.get("payment_method", "Unknown"),
+            "Service Date": eob_data.get("servicedate", date.today().isoformat()),
+            "Patient Name": eob_data.get("patient", ""),
+            "Provider Name": eob_data.get("provider", ""),
+            "Claim Date": eob_data.get("claimdate", date.today().isoformat()),
+            "Document ID": eob_data.get("DocumentID", ""),
+            "Service Name": item.get("name", ""),
+            "Billed": item.get("billed", 0),
+            "Discount": item.get("discount", 0),
+            "charged": item.get("charged", 0),
+            "Copay": item.get("copay", 0),
+            "Total": item.get("total", 0),
+            "category": item.get("category", "Uncategorized"),
         }
-        new_rows.append(new_row)
+    new_rows.append(new_row)
 
     # Convert the list of new rows to a DataFrame
     new_rows_df = pd.DataFrame(new_rows)

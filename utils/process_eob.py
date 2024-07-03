@@ -2,7 +2,7 @@ import json
 from utils.openai_init import openai_init
 from utils.encode_image import encode_image
 from utils.manage_data_eob import add_rows
-from utils.function_call_eob import function_call
+from utils.function_call_eob import function_call_eob
 
 client = openai_init()
 
@@ -28,14 +28,14 @@ def process_eob(eob_df, image_path):
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
-            {"role": "system", "content": "You are a processor of eob. If the provided image is not a insurance eob, DON'T DESCRIBE IT! Ask for a valid eob image."},
+            {"role": "system", "content": "You are a processor of explaination of benefits(eob). If the provided image is not a insurance eob, DON'T DESCRIBE IT! Ask for a valid eob image."},
             {"role": "user", "content": [
                 {"type": "image_url", "image_url": {
                     "url": f"data:image/png;base64,{base64_image}"}
                  }
             ]},
         ],
-        tools=function_call,
+        tools=function_call_eob,
         tool_choice="auto",
         temperature=0.0,
     )
@@ -54,7 +54,7 @@ def process_eob(eob_df, image_path):
 
             # print(eob_data)
             print(
-                f"\nRetrieved eob data from {eob_data['date']} at {eob_data['vendor']}")
+                f"\nRetrieved eob data from {eob_data['servicedate']} at {eob_data['patient']}")
 
             # Add the eob data to the expenses DataFrame
             eob_df = add_rows(eob_df, eob_data)

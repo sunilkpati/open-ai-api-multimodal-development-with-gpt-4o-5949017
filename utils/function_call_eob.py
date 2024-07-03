@@ -1,4 +1,4 @@
-function_call = [
+function_call_eob = [
     {
         "type": "function",
         "function": {
@@ -7,14 +7,27 @@ function_call = [
             "parameters": {
                 "type": "object",
                 "properties": {
+                    "patient": {
+                        "type": "string",
+                        "description": "Name of patient",
+                    },
                     "provider": {
                         "type": "string",
                         "description": "Name of provider",
                     },
-                    "date": {
+                    "DocumentID": {
+                        "type": "string",
+                        "description": "DocumentID",
+                    },
+                    "servicedate": {
                         "type": "string",
                         "format": "date",
                         "description": "Service Date",
+                    },
+                    "claimdate": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Claim Date",
                     },
                     "items": {
                         "type": "array",
@@ -39,11 +52,11 @@ function_call = [
                                 },
                                 "copay": {
                                     "type": "number",
-                                    "description": "Member Copay",
+                                    "description": "Copay",
                                 },
                                 "total": {
                                     "type": "number",
-                                    "description": "Total Pay",
+                                    "description": "Total",
                                 },
                                 "category": {
                                     "type": "string",
@@ -55,7 +68,7 @@ function_call = [
                         "description": "List of services in eob",
                     },
                 },
-                "required": ["provider", "date", "items"],
+                "required": ["patient", "claimdate", "provider", "servicedate", "DocumentID", "items"],
             },
         }
     }
