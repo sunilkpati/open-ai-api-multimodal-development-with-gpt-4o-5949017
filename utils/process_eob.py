@@ -54,7 +54,7 @@ def process_eob(eob_df, image_path):
 
             # print(eob_data)
             print(
-                f"\nRetrieved eob data from {eob_data['servicedate']} at {eob_data['patient']}")
+                f"\nRetrieved eob data from {eob_data['DocumentID']} at {eob_data['patient']}")
 
             # Add the eob data to the expenses DataFrame
             eob_df = add_rows(eob_df, eob_data)

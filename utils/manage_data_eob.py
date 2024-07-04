@@ -26,7 +26,7 @@ def add_rows(eob_df, eob_data):
 
     Parameters:
     - eob_df: DataFrame containing the eob data
-    - receipt_data: Dictionary containing the expense items to be added to the DataFrame
+    - eob_data: Dictionary containing the eob items to be added to the DataFrame
 
     Returns:
     - DataFrame: Updated eob DataFrame with the new rows added
@@ -36,24 +36,31 @@ def add_rows(eob_df, eob_data):
 
     # Process each item and append to the DataFrame
     new_rows = []
-    for item in eob_data['items']:
 
-        print(f"Adding item: {item['name']}")
-        new_row = {
-            "Service Date": eob_data.get("servicedate", date.today().isoformat()),
-            "Patient Name": eob_data.get("patient", ""),
-            "Provider Name": eob_data.get("provider", ""),
-            "Claim Date": eob_data.get("claimdate", date.today().isoformat()),
-            "Document ID": eob_data.get("DocumentID", ""),
-            "Service Name": item.get("name", ""),
-            "Billed": item.get("billed", 0),
-            "Discount": item.get("discount", 0),
-            "charged": item.get("charged", 0),
-            "Copay": item.get("copay", 0),
-            "Total": item.get("total", 0),
-            "category": item.get("category", "Uncategorized"),
-        }
-    new_rows.append(new_row)
+    for item in eob_data['items']:
+        for subitem in item['items']:
+
+            print(
+                f"Adding item: {item['claim_number']} , {subitem['service_description']}")
+            new_row = {
+                "Patient Name": eob_data.get("patient", ""),
+                "Provider Name": eob_data.get("provider", ""),
+                "Document ID": eob_data.get("DocumentID", ""),
+                "Claim Number": item.get("claim_number", ""),
+                "Claim Date": item.get("claimdate", date.today().isoformat()),
+                "Paid On": item.get("paid_on", 0),
+                "Service Date": subitem.get("servicedate", date.today().isoformat()),
+                "Service Description": subitem.get("service_description", ""),
+                "Billed": subitem.get("provider_billed", 0),
+                "Discount": subitem.get("member_discount", 0),
+                "charged": subitem.get("net_charged", 0),
+                "Copay": subitem.get("copay", 0),
+                "Plan Paid": subitem.get("your_plan_paid", 0),
+                "Total": subitem.get("total", 0),
+                "category": subitem.get("category", "Uncategorized"),
+            }
+            new_rows.append(new_row)
+
 
     # Convert the list of new rows to a DataFrame
     new_rows_df = pd.DataFrame(new_rows)

@@ -19,56 +19,78 @@ function_call_eob = [
                         "type": "string",
                         "description": "DocumentID",
                     },
-                    "servicedate": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "Service Date",
-                    },
-                    "claimdate": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "Claim Date",
-                    },
                     "items": {
                         "type": "array",
                         "items": {
                             "type": "object",
                             "properties": {
-                                "name": {
+                                "claim_number": {
                                     "type": "string",
-                                    "description": "Service Name",
+                                    "description": "Claim Number",
                                 },
-                                "billed": {
-                                    "type": "number",
-                                    "description": "Provider billed",
-                                },
-                                "discount": {
-                                    "type": "number",
-                                    "description": "Member discount",
-                                },
-                                "charged": {
-                                    "type": "number",
-                                    "description": "Net charged",
-                                },
-                                "copay": {
-                                    "type": "number",
-                                    "description": "Copay",
-                                },
-                                "total": {
-                                    "type": "number",
-                                    "description": "Total",
-                                },
-                                "category": {
+                                "claimdate": {
                                     "type": "string",
-                                    "description": "Category of item",
-                                    "enum": ["OfficeVisit", "Diagnostic", "Telehealth", "other"],
+                                    "format": "date",
+                                    "description": "Claim Date",
+                                },
+                                "paid_on": {
+                                    "type": "string",
+                                    "format": "date",
+                                    "description": "Paid On",
+                                },
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "servicedate": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "description": "Service Date",
+                                            },
+                                            "service_description": {
+                                                "type": "string",
+                                                "description": "Service Description",
+                                            },
+                                            "provider_billed": {
+                                                "type": "number",
+                                                "description": "Provider billed",
+                                            },
+                                            "member_discount": {
+                                                "type": "number",
+                                                "description": "Member discount",
+                                            },
+                                            "net_charged": {
+                                                "type": "number",
+                                                "description": "Net charged",
+                                            },
+                                            "your_plan_paid": {
+                                                "type": "number",
+                                                "description": "Plan Paid",
+                                            },
+                                            "copay": {
+                                                "type": "number",
+                                                "description": "Copay",
+                                            },
+                                            "total": {
+                                                "type": "number",
+                                                "description": "Total",
+                                            },
+                                            "category": {
+                                                "type": "string",
+                                                "description": "Category of item",
+                                                "enum": ["Office Visit", "Diagnostic", "Telehealth", "other"],
+                                            },
+                                        },
+                                    },
+                                    "description": "List of services in eob",
                                 },
                             },
                         },
-                        "description": "List of services in eob",
+                        "description": "List of claims in eob",
                     },
                 },
-                "required": ["patient", "claimdate", "provider", "servicedate", "DocumentID", "items"],
+                "required": ["patient", "provider", "DocumentID", "items"],
             },
         }
     }
